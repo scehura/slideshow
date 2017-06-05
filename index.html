@@ -21,11 +21,17 @@
       <div><img src="img/red.svg" alt="n"></div>
       <div><img src="img/black.svg" alt="n"></div>
     </div>
+    <button class="prev">PREV</button>
+    <button class="next">NEXT</button>
     <script src="slideshow.js"></script>
     <script type="text/javascript">
+      var next = document.querySelector('.next');
+      var prev = document.querySelector('.prev');
       var main = new SlideShow({
         perPage: 2
       });
+      next.addEventListener('click', main.next);
+      prev.addEventListener('click', main.prev)
     </script>
   </body>
 </html>

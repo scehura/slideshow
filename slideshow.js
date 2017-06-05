@@ -22,6 +22,7 @@ var SlideShow = function(options) {
   // Create slidetrack
   var slideTrack = document.createElement('div');
   slideTrack.style.width = slideTrackSize(slideShow.offsetWidth);
+  slideTrack.style.transition = 'all .5s ease-in-out';
   slideShow.appendChild(slideTrack);
 
   // Set slides style
@@ -55,6 +56,22 @@ var SlideShow = function(options) {
 
   function slideTrackSize(width) {
     return ((width / perPage) * slides) + 'px';
+  }
+
+  function slidesMove() {
+    return slideTrack.style.transform = 'translate3d(-'+ (slideIndex * slide[0].offsetWidth) +'px, 0, 0)';
+  }
+
+  this.next = function() {
+    if(slideIndex >= (slides - perPage)) return;
+    slideIndex++;
+    slidesMove();
+  }
+
+  this.prev = function() {
+    if(slideIndex === 0) return;
+    slideIndex--;
+    slidesMove();
   }
 
 }
