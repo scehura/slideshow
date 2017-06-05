@@ -1,0 +1,60 @@
+/**
+  * SLideShow
+  * @param {Object} options - user config
+  */
+var SlideShow = function(options) {
+
+  // Check whether SlideShow is a constructor
+  if(!(this instanceof SlideShow)) {
+    return new SlideShow(options);
+  }
+
+  var config = userConfig(options);
+  var slideIndex = 0;
+  var perPage = config.perPage;
+
+  var slideShow = document.querySelector(config.selector);
+  var slide = slideShow.querySelectorAll('div');
+  var slides = slide.length;
+
+  slideShow.style.overflow = 'hidden';
+
+  // Create slidetrack
+  var slideTrack = document.createElement('div');
+  slideTrack.style.width = slideTrackSize(slideShow.offsetWidth);
+  slideShow.appendChild(slideTrack);
+
+  // Set slides style
+  for(var i = 0; i < slides; i++) {
+    slide[i].style.width = (100 / slides) + '%';
+    slide[i].style.float = 'left';
+    slideTrack.appendChild(slide[i]);
+  }
+
+  window.addEventListener('resize', function() {
+    slideTrack.style.width = slideTrackSize(slideShow.offsetWidth);
+  });
+
+  // Set user config
+  function userConfig(options) {
+    // Default config
+    var config = {
+      selector: '.slideshow',
+      perPage: 1
+    }
+
+    // Apply user config
+    for(var attr in options) {
+      if(config.hasOwnProperty(attr)) {
+        config[attr] = options[attr];
+      }
+    }
+
+    return config;
+  }
+
+  function slideTrackSize(width) {
+    return ((width / perPage) * slides) + 'px';
+  }
+
+}

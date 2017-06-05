@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256">
+ <g>
+  <title>n</title>
+  <rect fill="#111111" id="canvas_background" height="258" width="258" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>n</title>
+  <text stroke="#ffffff" transform="matrix(14.434018606199688,0,0,9.351301507367284,-1013.99149113637,-1028.7121494315545) " xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="24" id="svg_3" y="132" x="70.5" stroke-width="0" fill="#ffffff">N</text>
+ </g>
+</svg>
