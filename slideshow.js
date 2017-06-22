@@ -17,6 +17,8 @@ var SlideShow = function(options) {
   var slide = slideShow.querySelectorAll('div');
   var slides = slide.length;
 
+  changeNumberSlides();
+
   slideShow.style.overflow = 'hidden';
 
   // Create slidetrack
@@ -33,6 +35,7 @@ var SlideShow = function(options) {
   }
 
   window.addEventListener('resize', function() {
+    changeNumberSlides();
     slideTrack.style.width = slideTrackSize(slideShow.offsetWidth);
   });
 
@@ -52,6 +55,18 @@ var SlideShow = function(options) {
     }
 
     return config;
+  }
+
+  function changeNumberSlides() {
+    if(typeof config.prePage === 'number') {
+      perPage = this.config.perPage;
+    } else if(typeof config.perPage === 'object') {
+      for(var viewport in config.perPage) {
+        if(window.innerWidth >= viewport) {
+          perPage = config.perPage[viewport];
+        }
+      }
+    }
   }
 
   function slideTrackSize(width) {

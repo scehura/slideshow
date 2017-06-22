@@ -28,10 +28,14 @@
       var next = document.querySelector('.next');
       var prev = document.querySelector('.prev');
       var main = new SlideShow({
-        perPage: 2
+        perPage: {
+          768: 3,
+          425: 2,
+          320: 1
+        }
       });
       next.addEventListener('click', main.next);
-      prev.addEventListener('click', main.prev)
+      prev.addEventListener('click', main.prev);
     </script>
   </body>
 </html>
