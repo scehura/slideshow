@@ -1,8 +1,8 @@
 /**
-  * SLideShow
+  * SlideShow
   * @param {Object} options - user config
   */
-var SlideShow = function(options) {
+function SlideShow(options) {
 
   // Check whether SlideShow is a constructor
   if(!(this instanceof SlideShow)) {
@@ -14,24 +14,29 @@ var SlideShow = function(options) {
   var perPage = config.perPage;
 
   var slideShow = document.querySelector(config.selector);
-  var slide = slideShow.querySelectorAll('div');
-  var slides = slide.length;
+  var slide = slideShow.children;
+  var slides = [];
 
   changeNumberSlides();
 
+  // Get slides
+  for(var s = 0; s < slide.length; s++) {
+    slides.push(slide[s]);
+  }
+
   slideShow.style.overflow = 'hidden';
 
-  // Create slidetrack
+  // Create slideTrack
   var slideTrack = document.createElement('div');
   slideTrack.style.width = slideTrackSize(slideShow.offsetWidth);
   slideTrack.style.transition = 'all .5s ease-in-out';
   slideShow.appendChild(slideTrack);
 
   // Set slides style
-  for(var i = 0; i < slides; i++) {
-    slide[i].style.width = (100 / slides) + '%';
-    slide[i].style.float = 'left';
-    slideTrack.appendChild(slide[i]);
+  for(var i = 0; i < slides.length; i++) {
+    slides[i].style.width = (100 / slides.length) + '%';
+    slides[i].style.float = 'left';
+    slideTrack.appendChild(slides[i]);
   }
 
   window.addEventListener('resize', function() {
@@ -39,27 +44,30 @@ var SlideShow = function(options) {
     slideTrack.style.width = slideTrackSize(slideShow.offsetWidth);
   });
 
-  // Set user config
+
+  /**
+    * Setting user config
+    */
   function userConfig(options) {
-    // Default config
+    // default config
     var config = {
       selector: '.slideshow',
       perPage: 1
-    }
+    };
 
     // Apply user config
-    for(var attr in options) {
-      if(config.hasOwnProperty(attr)) {
-        config[attr] = options[attr];
+    for(var option in options) {
+      if(config.hasOwnProperty(option)) {
+        config[option] = options[option];
       }
     }
-
     return config;
   }
 
+
   function changeNumberSlides() {
     if(typeof config.prePage === 'number') {
-      perPage = this.config.perPage;
+      perPage = config.perPage;
     } else if(typeof config.perPage === 'object') {
       for(var viewport in config.perPage) {
         if(window.innerWidth >= viewport) {
@@ -69,24 +77,35 @@ var SlideShow = function(options) {
     }
   }
 
+
+  /**
+    * Calculate width of slideTrack
+    */
   function slideTrackSize(width) {
-    return ((width / perPage) * slides) + 'px';
+    return ((width / perPage) * slides.length) + 'px';
   }
+
 
   function slidesMove() {
-    return slideTrack.style.transform = 'translate3d(-'+ (slideIndex * slide[0].offsetWidth) +'px, 0, 0)';
+    return slideTrack.style.transform = 'translate3d(-'+ (slideIndex * slides[0].offsetWidth) +'px, 0, 0)';
   }
 
-  this.next = function() {
-    if(slideIndex >= (slides - perPage)) return;
+
+  // Next slide
+  function next() {
+    if(slideIndex >= (slides.length - perPage)) return;
     slideIndex++;
     slidesMove();
   }
 
-  this.prev = function() {
+  
+  // Prev slide
+  function prev() {
     if(slideIndex === 0) return;
     slideIndex--;
     slidesMove();
   }
+
+  return { next: next, prev: prev };
 
 }
